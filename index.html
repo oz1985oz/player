@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Awesome Player</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style>
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 1rem;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        color: #666;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: .5rem;
+        background-color: #eee;
+        width: 100%;
+        z-index: 999;
+      }
+      #search {
+        background-color: black;
+        background-image: url('images/searchicon.png');
+        background-position: 10px 10px;
+        background-size: 1rem;
+        background-repeat: no-repeat;
+        padding: .5rem 1.25rem .5rem 2rem;
+        border: none;
+        border-radius: .5rem;
+        outline: none;
+      }
+      #search::placeholder, #search {
+        color: white;
+      }
+      #add_btn {
+        background-color: Transparent;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+        background-image: url('images/plusicon.png');
+        background-position: 10px 10px;
+        background-size: 1.5rem;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+      }
+      #player_container {
+        display: flex;
+        justify-content: center;
+        margin-top: 4rem;
+        width: 100%;
+      }
+      main {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 4rem;
+      }
+      section {
+        width: 250px;
+        position: relative;
+        margin: 1rem;
+      }
+      h4 {
+        text-align: center;
+        height: 10vh;
+      }
+      .playlist-image {
+        border-radius: 50%;
+        object-fit: cover;
+        padding: 0px;
+        width: 250px;
+        height: 250px;
+      }
+      .playlist-play-btn {
+        border-radius: 50%;
+        position: absolute;
+        top: calc(50% + 19px);
+        left: calc(50% - 19px);
+      }
+      #popup_container {
+        z-index: 999999;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,.5);
+      }
+      #popup {
+        position: relative;
+        width: 50%;
+        min-height: 50vh;
+        padding: 2rem;
+        text-align: center;
+        background-color: #fff;
+      }
+      .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+      #playlist_form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      #playlist_form_content {
+        width: 20vw;
+      }
+      .player {
+        display: flex;
+        /*flex-wrap: wrap;*/
+        justify-content: space-between;
+        width: 50%;
+        padding: .5rem 0;
+        border: .2rem solid #333;
+        border-radius: 15rem; 
+      }
+      .song {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <button id="add_btn">Add new playlist</button>
+      <input id="search" type="search" placeholder="Search playlist">
+    </header>
+    <div id="player_container"></div>
+    <main>
+    </main>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/FormPopup.js"></script>
+    <script type="text/javascript" src="js/Player.js"></script>
+    <script type="text/javascript" src="js/Playlist.js"></script>
+    <script type="text/javascript" src="js/DynamicContentPopup.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
