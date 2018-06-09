@@ -25,7 +25,7 @@ class FormPopup {
 
 		$('<button>', {
 			text: "🗙", 			
-			class: "close-btn", 
+			class: "btn close-btn", 
 			click: this.close.bind(this), 
 		}).appendTo(popup)
 

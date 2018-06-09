@@ -1,15 +1,36 @@
-<form id="playlist_form">
-  <div id="playlist_form_content">
-    <div class="form-group">
-      <label for="PlaylistName">Playlist Name</label>
-      <input type="text" class="form-control" id="PlaylistName" placeholder="Enter name" required>
+<form id="songs_form">
+  <div id="dynamic_row">
+    <div class="form-group row songRow">
+      <label for="urlSong" class="col-2 col-form-label">Song URL</label>
+      <div class="col-5">
+        <input class="form-control" type="text" placeholder="Enter URL" id="urlSong">
+      </div>
+      <label for="songName" class="col-1 col-form-label">Name</label>
+      <div class="col-3">
+        <input class="form-control" type="text" placeholder="Enter name" id="songName">
+      </div>
     </div>
-    <div class="form-group">
-      <label for="PlaylistURL">Playlist URL</label>
-      <input type="text" class="form-control" id="PlaylistURL" placeholder="Enter URL" required>
-    </div>
-    <input class="btn btn-primary" type="submit" value="Next">
-    <button class="btn btn-secondary">RESET FIELDS</button> 
   </div>
-  <img class="playlist-image" src="images/playlist.jpg" alt="playlist image">
+  
+    <button id="add_another_song" class="btn">Add another song</button> 
+    <input class="btn btn-primary" type="submit" value="FINISH & SAVE">
+  </div>
 </form>
+
+<script>
+  function cloneRow() {
+   $('.songRow:first').clone().appendTo('#dynamic_row');
+  } 
+  cloneRow();
+  cloneRow();
+
+  $("#add_another_song").click(function() {
+    cloneRow();
+  });
+
+  $("#songs_form").submit(function(e) {
+    e.preventDefault();
+    console.log($('#PlaylistName').val());
+    // formPopup.close();
+  });
+</script>

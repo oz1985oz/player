@@ -12,6 +12,7 @@
         padding: 1rem;
         font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
         color: #666;
+        background-image: url('images/body.jpg');
       }
       header {
         display: flex;
@@ -21,7 +22,8 @@
         top: 0;
         left: 0;
         padding: .5rem;
-        background-color: #eee;
+        /*background-color: #eee;*/
+        background-image: url(images/s2.jpg);
         width: 100%;
         z-index: 999;
       }
@@ -39,7 +41,7 @@
       #search::placeholder, #search {
         color: white;
       }
-      #add_btn {
+      #add_btn, #add_another_song {
         background-color: Transparent;
         border: none;
         cursor:pointer;
@@ -60,21 +62,30 @@
       main {
         display: flex;
         flex-wrap: wrap;
-        margin-top: 4rem;
       }
       section {
-        width: 250px;
+        width: 200px;
         position: relative;
         margin: 1rem;
       }
+      h2 {
+        border-bottom: 1px solid #666;
+      }
       h4 {
         text-align: center;
+        font-size: 1.3rem;
         height: 10vh;
       }
       .playlist-image {
         border-radius: 50%;
         object-fit: cover;
         padding: 0px;
+        width: 200px;
+        height: 200px;
+      }
+      .playlist-image-form {
+        border-radius: 50%;
+        object-fit: cover;
         width: 250px;
         height: 250px;
       }
@@ -102,8 +113,7 @@
         width: 50%;
         min-height: 50vh;
         padding: 2rem;
-        text-align: center;
-        background-color: #fff;
+        background-image: url(images/form.jpg);
       }
       .close-btn {
         position: absolute;
@@ -122,13 +132,32 @@
         display: flex;
         /*flex-wrap: wrap;*/
         justify-content: space-between;
-        width: 50%;
-        padding: .5rem 0;
+        width: 39rem;
+        background-image: url(images/sound6.jpg);
+        padding: 1rem 4rem 1rem 1rem;
         border: .2rem solid #333;
         border-radius: 15rem; 
       }
+      nav {
+        overflow-y: auto;
+        height: 25vh;
+      }
       .song {
         cursor: pointer;
+      }
+      .form-row {
+        margin: 1rem;
+      }
+      ::-webkit-scrollbar {
+          width: 12px;
+      }
+      ::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+          border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
       }
     </style>
   </head>

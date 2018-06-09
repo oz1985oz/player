@@ -26,9 +26,12 @@ $('#add_btn').click(function() {
 	formPopup.build();
 });
 
-$("form").submit(function(e) {
-	e.preventDefault();
-	console.log($('#PlaylistName').val());
-	const formPopup = new DynamicContentPopup('Add Playlist Songs', 'add_form.html');
-	formPopup.build();
-});
+// function formClick() {
+// 	$("#playlist_form").submit(function(e) {
+// 		e.preventDefault();
+// 		console.log($('#PlaylistName').val());
+// 		const formPopup = new DynamicContentPopup('Add Playlist Songs', 'add_form.html');
+// 		formPopup.build();
+// 	});
+// }
+

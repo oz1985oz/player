@@ -11,5 +11,15 @@
     <input class="btn btn-primary" type="submit" value="Next">
     <button class="btn btn-secondary">RESET FIELDS</button> 
   </div>
-  <img class="playlist-image" src="images/playlist.jpg" alt="playlist image">
+  <img class="playlist-image-form" src="images/playlist.jpg" alt="playlist image">
 </form>
+
+<script>
+  $("#playlist_form").submit(function(e) {
+    e.preventDefault();
+    console.log($('#PlaylistName').val());
+    const formPopup = new DynamicContentPopup('Add Playlist Songs', 'add_form.html');
+    formPopup.close();
+    formPopup.build();
+  });
+</script>

@@ -10,5 +10,5 @@ class DynamicContentPopup extends FormPopup {
 		.then(html => {
 			$('#popup').append($(html));
 		})
-	} 
+	}
 }
