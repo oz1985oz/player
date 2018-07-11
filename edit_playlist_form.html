@@ -1,0 +1,68 @@
+<form id="edit_playlist_form">
+  <div id="playlist_form_content">
+    <div class="form-group">
+      <label for="PlaylistName">Playlist Name</label>
+      <input type="text" class="form-control" id="PlaylistName" placeholder="Enter name" required>
+    </div>
+    <div class="form-group">
+      <label for="PlaylistURL">Playlist URL</label>
+      <input type="text" class="form-control" id="PlaylistURL" placeholder="Enter URL" required>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Save">
+    <button class="btn btn-secondary clear">RESET FIELDS</button> 
+  </div>
+  <div id="img">
+    <!-- <img class="playlist-image-form" src= alt="playlist image"> -->
+  </div>
+</form>
+
+<script>
+  //init - add Id to data from element and fill input
+  $(document).ready(function() {
+    var id = $('#edit_playlist_form').data('play_id');
+    var name = $('[data-p_id='+id+'] h4').text();
+    var imgUrl = $('[data-p_id='+id+'] img').attr("src");
+    $('#PlaylistName').val(name);
+    $('#PlaylistURL').val(imgUrl);
+    createImg(imgUrl);
+  })
+
+  $("#edit_playlist_form").submit(function(e) {
+    e.preventDefault();
+    var id = e.target.dataset.play_id;
+    var name = $('#PlaylistName').val();
+    var imgUrl = $('#PlaylistURL').val();
+    var updateData = {"id":id, "name": name, "image": imgUrl};
+    const playlist = new Playlist(updateData);
+    var updateAct = playlist.UpdatePlaylist (updateData);
+    
+    updateAct.then(function() {
+      var update = new Update()
+      update.initPage()
+    })
+      var formPopup = new DynamicContentPopup()
+      formPopup.close()
+  });
+
+  $(document).on("input", '#PlaylistURL', function () {
+    $('#img').empty();
+    createImg(this.value);
+    $(".playlist-image-form").on('error', function(){
+      $(this).attr( "src", "images/playlist.jpg");
+    });
+  });
+
+  $(".clear").click(function(e) {
+    e.preventDefault();
+    $('#PlaylistName').val("");
+    $('#PlaylistURL').val("");
+  });
+
+  function createImg(srcImg) {
+    $('<img>', {
+      class: "playlist-image-form",
+      src: srcImg,
+    }).appendTo('#img');
+  }
+
+</script>

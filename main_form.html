@@ -9,17 +9,50 @@
       <input type="text" class="form-control" id="PlaylistURL" placeholder="Enter URL" required>
     </div>
     <input class="btn btn-primary" type="submit" value="Next">
-    <button class="btn btn-secondary">RESET FIELDS</button> 
+    <button class="btn btn-secondary clear">RESET FIELDS</button> 
   </div>
-  <img class="playlist-image-form" src="images/playlist.jpg" alt="playlist image">
+  <div id="img">
+    <img class="playlist-image-form" src="images/playlist.jpg" alt="playlist image">
+  </div>
 </form>
 
 <script>
   $("#playlist_form").submit(function(e) {
     e.preventDefault();
-    console.log($('#PlaylistName').val());
+    toJsonInLocalStoreg();
     const formPopup = new DynamicContentPopup('Add Playlist Songs', 'add_form.html');
     formPopup.close();
     formPopup.build();
   });
+
+  $(document).on("input", '#PlaylistURL', function () {
+    $('#img').empty();
+    $('<img>', {
+      class: "playlist-image-form",
+      src: this.value,
+    }).appendTo('#img');
+
+    $(".playlist-image-form").on('error', function(){
+      $(this).attr( "src", "images/playlist.jpg");
+    });
+  });
+
+  $('.clear').click(function(e) {
+    e.preventDefault();
+    $('#PlaylistName').val("");
+    $('#PlaylistURL').val("");
+  });
+
+  function toJsonInLocalStoreg() {
+    console.log($('#PlaylistName').val())
+    var temp = [
+      {
+        name: $('#PlaylistName').val(),
+        image: $('#PlaylistURL').val(),
+        songs: []
+      }
+    ];
+    localStorage.setItem('temp', JSON.stringify(temp));
+  }
+
 </script>

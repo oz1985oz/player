@@ -1,14 +1,15 @@
 <form id="songs_form">
   <div id="dynamic_row">
     <div class="form-group row songRow">
-      <label for="urlSong" class="col-2 col-form-label">Song URL</label>
-      <div class="col-5">
-        <input class="form-control" type="text" placeholder="Enter URL" id="urlSong">
+      <label for="urlSong" class=" col-form-label">Song URL</label>
+      <div>
+        <input class="form-control urlSong" type="text" placeholder="Enter URL" required>
       </div>
-      <label for="songName" class="col-1 col-form-label">Name</label>
-      <div class="col-3">
-        <input class="form-control" type="text" placeholder="Enter name" id="songName">
+      <label for="songName" class="col-form-label">Name</label>
+      <div>
+        <input class="form-control songName" type="text" placeholder="Enter name" required>
       </div>
+      <btn class="btn btn-sm remove-row">🗙</btn>
     </div>
   </div>
   
@@ -18,19 +19,62 @@
 </form>
 
 <script>
-  function cloneRow() {
-   $('.songRow:first').clone().appendTo('#dynamic_row');
-  } 
+  var postNew = localStorage.getItem('temp');
+  postNew = JSON.parse(postNew);
+
   cloneRow();
   cloneRow();
 
-  $("#add_another_song").click(function() {
+  $("#add_another_song").click(function(e) {
+    e.preventDefault();
     cloneRow();
+  });
+
+  $(".remove-row").click(function(e) {
+    removeRow(e);
   });
 
   $("#songs_form").submit(function(e) {
     e.preventDefault();
-    console.log($('#PlaylistName').val());
-    // formPopup.close();
+
+    postNew = songs(postNew[0]);
+    postNew = JSON.stringify(postNew);
+    console.log(postNew);
+
+    var updateAct = $.post('api/playlist', postNew);
+
+    updateAct.then(function() {
+      var update = new Update()
+      update.initPage()
+    })
+
+    const formPopup = new DynamicContentPopup();
+    formPopup.close();
   });
+
+  function cloneRow() {
+    $('.songRow:first').clone(true).appendTo('#dynamic_row');
+  } 
+
+  function songs(obj) {
+    var nameArray = document.querySelectorAll('.songName');
+    var urlArray = document.querySelectorAll('.urlSong');
+    console.log(nameArray);
+    console.log(urlArray);
+
+    for(var i = 0, length1 = nameArray.length; i < length1; i++){
+      obj.songs.push({name: nameArray[i].value, url: urlArray[i].value});
+    }
+    return obj
+  }
+
+  function removeRow(e) {
+    e.preventDefault();
+    if ($('.songRow').length > 1) {
+      e.target.parentNode.remove();
+    } else {
+      alert("You can't remove the last row")
+    }
+  }
+
 </script>

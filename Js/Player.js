@@ -8,7 +8,7 @@ class Player {
 
 	getSongs() {
 		$.get('api/playlist/' + this.playlistId + '/songs', function(response) {
-			console.log(response.data.songs[0].url);
+			// console.log(response.data.songs[0].url);
 			this.songs = response.data.songs;
 			this.build();
 		}.bind(this));
@@ -46,7 +46,26 @@ class Player {
 
 		rightPlayerContent.append(this.songsList.bind(this))
 
-		$('#player_container').prepend(this.container)
+		var btnContainer = $('<div>', {
+			class: "player-btns",
+		}).appendTo('#player_container')
+
+		$('<button>', {
+			class: "player-x-btn btn btn-dark",
+			text: "✕",
+			'data-playlist_id_player': this.playlistId,
+			click: this.closePlayer.bind(this)
+		}).appendTo(btnContainer)
+
+		$('<button>', {
+			class: "player-edit-btn btn btn-dark",
+			text: "✎",
+			'data-playlist_id_player': this.playlistId,
+			click: this.editSongsform.bind(this)
+		}).appendTo(btnContainer)
+
+		$('#player_container').prepend(this.container);
+		$('[data-song_index="0"]').addClass("bold");
 	}
 
 	playNext(e) {
@@ -56,6 +75,8 @@ class Player {
 		e.target.src = this.songs[index].url;
 		e.target.play();
 		$('.playing-now').text("NOW PLAYING: " + this.songs[index].name);
+		$('.bold').removeClass();
+		$('[data-song_index='+index+']').addClass("bold");
 	}
 
 	// playPrevious(e) {
@@ -89,7 +110,8 @@ class Player {
 					'data-song_id': index
 				});
 				$('.playing-now').text("NOW PLAYING: " + value.name);
-				// $('div').data('song_index', index).css("font-weight", "bold")
+				$('.bold').removeClass('bold');
+				$('[data-song_index='+index+']').addClass("bold");
 			});
 		});
 		return songsList;
@@ -98,11 +120,21 @@ class Player {
 	//not working yet (bold & sign ▶)
 	playSign(index) {
 		// if ($('audio').attr('src')) {
-			$("['song_index'=index]").css("font-weight", "bold")
+			$("['song_index'="+index+"]").css("font-weight", "bold")
 			$('<span>', {
 				class: "play-sign",
 				text: "▶",
 			}).prependTo($("['song_index'=index]"));
 		// }
+	}
+
+	editSongsform()	{
+		localStorage.setItem('songsList', JSON.stringify(this.songs));
+		const editSongsform = new DynamicContentPopup('Edit Songs', 'edit_songs_form.html', this.playlistId);
+		editSongsform.build();
+	}
+
+	closePlayer() {
+		$('#player_container').empty();
 	}
 }

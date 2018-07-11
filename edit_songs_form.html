@@ -1,0 +1,91 @@
+<form id="edit_songs_form">
+  <div id="dynamic_row">
+    <div class="form-group row songRow">
+      <label for="urlSong" class="col-form-label">Song URL</label>
+      <div>
+        <input class="form-control urlSong" type="text" placeholder="Enter URL" required>
+      </div>
+      <label for="songName" class="col-form-label">Name</label>
+      <div>
+        <input class="form-control songName" type="text" placeholder="Enter name" required>
+      </div>
+      <btn class="btn btn-sm remove-row">🗙</btn>
+    </div>
+  </div>
+  
+    <button id="add_another_song" class="btn">Add another song</button> 
+    <input class="btn btn-primary" type="submit" value="FINISH & SAVE">
+  </div>
+</form>
+
+<script>
+  var songsList = localStorage.getItem('songsList');
+  songsList = JSON.parse(songsList);
+  $.each(songsList, function(index, value) {
+    embed(value);
+    cloneRow();
+  });
+  $('.songRow').last().remove();
+  // console.log(songsList)
+
+  $("#add_another_song").click(function(e) {
+    e.preventDefault();
+    cloneRow();
+  });
+
+  $(".remove-row").click(function(e) {
+    e.preventDefault();
+    if ($('.songRow').length > 1) {
+      e.target.parentNode.remove();
+    } else {
+      alert("You can't remove the last row")
+    }
+  });
+
+  $("#edit_songs_form").submit(function(e) {
+    e.preventDefault();
+
+    var id = e.target.dataset.play_id;
+    var imgUrl = $('.left-list .playlist-image').attr('src')
+    var playlistName = $('.player-name').text().slice(15);
+
+    var updateList = songs();
+    updateList = JSON.stringify(updateList);
+    console.log(updateList);
+    
+    var updateAct = $.post('api/playlist/' +  id + '/songs', updateList);
+    
+    updateAct.then(function() {
+      new Player(id, playlistName, imgUrl);
+    })
+
+    const formPopup = new DynamicContentPopup();
+    formPopup.close();
+  });
+
+  function cloneRow() {
+    $('.songRow:first').clone(true).appendTo('#dynamic_row');
+    $('.urlSong').last().val("");
+    $('.songName').last().val("");
+  } 
+
+  function songs() {
+    var obj = {"songs":[]};
+    var nameArray = document.querySelectorAll('.songName');
+    var urlArray = document.querySelectorAll('.urlSong');
+    console.log(nameArray);
+    console.log(urlArray);
+
+    for(var i = 0, length1 = nameArray.length; i < length1; i++){
+      obj.songs.push({name: nameArray[i].value, url: urlArray[i].value});
+    }
+    return obj
+  }
+  function embed(value) {
+    var url = value.url;
+    var name = value.name;
+    $('.urlSong').last().val(url);
+    $('.songName').last().val(name);
+  }
+
+</script>

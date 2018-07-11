@@ -1,7 +1,8 @@
 class DynamicContentPopup extends FormPopup {
-	constructor (text, url) {
+	constructor (text, url, id) {
 		super(text);
 		this.url = url;
+		this.id = id;
 	}
 	build () {
 		super.build();
@@ -9,6 +10,7 @@ class DynamicContentPopup extends FormPopup {
 		.then(response => response.text())
 		.then(html => {
 			$('#popup').append($(html));
+			$('form').attr('data-play_id', this.id);
 		})
 	}
 }
